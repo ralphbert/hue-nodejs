@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
+const port = 8080;
 const manager = new TodoManager();
 
 app.get('/todos', function (req, res) {
@@ -53,6 +54,19 @@ app.put('/todos/:id/:done', function (req, res) {
   });
 });
 
-app.listen(3000, function () {
-  console.log('server running - http://localhost:3000')
+app.listen(port, function () {
+  console.log(`server running - http://localhost:${port}`)
+});
+
+// prefill manager with dummy content
+
+[
+  'Watch Game Of Thrones Season 7',
+  'Buy groceries',
+  'Pay rent',
+  'Eat some pizza',
+  'Watch Game Of Thrones Season 7 again'
+].forEach((todoText) => {
+  var todo = new Todo(todoText);
+  manager.add(todo);
 });
